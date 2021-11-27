@@ -1,0 +1,16 @@
+---
+- name: test change
+  snow_record:
+    username: admin
+    password: uM2YBSyKpdn1
+    instance: dev112400
+    state: present
+    table: change_task
+    data:
+      short_description: "Sample Task Creation for Change {{ new_change.record.number }}"
+      description: '2021| NON PROD Q3 Linux Patching QA'
+      change_request: "{{ new_change.record.number }}"
+  register: change_task
+- debug:
+    msg: "New change has been created : {{ change_task.record.number }} "  
+  
