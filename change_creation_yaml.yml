@@ -1,0 +1,31 @@
+---
+- gather_facts: false
+  hosts: localhost
+  vars_files:
+    - Server_Inventory_hosts.yml
+  tasks:
+  - name: Create a ticket in SNOW updated
+    register: new_change_request
+    snow_record:
+      data:
+        u_environment: "{{item.Environment}}"
+        cmdb_ci: "{{item.CI}}"
+        start_date: "{{item.start_date}}"
+        end_date: "{{item.end_date}}"
+        short_description: "{{item.Short_Description}}"
+        category: "{{item.Category}}"
+        assignment_group: "{{item.Assigned_Group}}"
+        assigned_to: "{{item.Assigned_To}}"
+        implementation_plan: "{{item.Implemention_Plan}}"
+        backout_plan: "{{item.BackoutPlan}}"
+        description: 'PRM CHANGE CREATION'
+      instance: dev112400
+      password: uM2YBSyKpdn1
+      state: present
+      table: change_request
+      username: admin
+    with_items:
+        - "{{ serverinventory }}"
+#    register: new_change_request
+#- debug: var=new_change_request.record.number
+      
